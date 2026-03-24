@@ -17,6 +17,8 @@ from utils import save_checkpoint, set_seed, load_phase1_checkpoint, freeze_modu
 
 """ Coded by Luísa Ferreira, 2026 with assistance of ChatGPT 5.2 (OpenAI)."""
 
+def get_core_model(model: nn.Module) -> nn.Module:
+    return model.module if isinstance(model, nn.DataParallel) else model
 
 # ---------------------------------------------------------
 # Curriculum / rollout
@@ -105,7 +107,8 @@ def forward_phase2(model, feats, joints3d, pred_steps, w_recon_3d, w_future_3d, 
 
 def train(*, model, loader, optimizer, scaler, device, pred_steps, max_pred_steps, use_amp, grad_clip, w_recon_3d, w_future_3d, w_latent, w_vel):
     model.train()
-    model.f_3D.eval()   # frozen in phase 2
+    core_model = get_core_model(model)
+    core_model.f_3D.eval()   # frozen in phase 2
 
     meter = {
         "loss": 0.0,
