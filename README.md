@@ -79,7 +79,7 @@ sbatch train2.sh
 ### Phase 1
 For phase, the model is evaluated using **MPJPE (Mean Per Joint Position Error)**, following the protocol used in the original paper. You can run the evaluation with:
 ```bash
-sbatch results.sh
+sbatch eval_phase1.sh
 ```
 
 The evaluation was performed on the test set using Subject 9. The results obtained are:
@@ -94,7 +94,7 @@ Our implementation achieves a slightly lower MPJPE compared to the value reporte
 ### Phase 2
 For phase 2, the model is evaluated using **Reconstruction Error**, i.e., MPJPE after Procrustes alignment (PA-MPJPE), following the protocol used in the original paper. You can run the evaluation with:
 ```bash
-sbatch results.sh
+sbatch eval_phase2.sh
 ```
 
 The evaluation was performed on the test set using Subject 9.  The Constant Baseline corresponds to simply repeating the last observed frame for all future time steps.
